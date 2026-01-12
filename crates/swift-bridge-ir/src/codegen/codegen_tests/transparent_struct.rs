@@ -77,8 +77,17 @@ extension __swift_bridge__$SomeStruct {
             r#"
 #include <stdint.h>
 #include <stdbool.h>
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 typedef struct __swift_bridge__$SomeStruct { uint8_t _private; } __swift_bridge__$SomeStruct;
 typedef struct __swift_bridge__$Option$SomeStruct { bool is_some; __swift_bridge__$SomeStruct val; } __swift_bridge__$Option$SomeStruct;
+
+#ifdef __cplusplus
+}
+#endif
     "#,
         )
     }
@@ -684,9 +693,18 @@ func some_function(_ arg: Optional<SomeStruct>) -> Optional<SomeStruct> {
             r#"
 #include <stdint.h>
 #include <stdbool.h>
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 typedef struct __swift_bridge__$SomeStruct { uint8_t field; } __swift_bridge__$SomeStruct;
 typedef struct __swift_bridge__$Option$SomeStruct { bool is_some; __swift_bridge__$SomeStruct val; } __swift_bridge__$Option$SomeStruct;
 struct __swift_bridge__$Option$SomeStruct __swift_bridge__$some_function(struct __swift_bridge__$Option$SomeStruct arg);
+
+#ifdef __cplusplus
+}
+#endif
     "#,
         )
     }

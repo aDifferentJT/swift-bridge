@@ -40,7 +40,15 @@ func some_function<GenericIntoRustString: IntoRustString>(_ arg: GenericIntoRust
     fn expected_c_header() -> ExpectedCHeader {
         ExpectedCHeader::ExactAfterTrim(
             r#"
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 void __swift_bridge__$some_function(void* arg);
+
+#ifdef __cplusplus
+}
+#endif
     "#,
         )
     }
@@ -97,7 +105,15 @@ func some_function<GenericToRustStr: ToRustStr>(_ arg: GenericToRustStr) {
     fn expected_c_header() -> ExpectedCHeader {
         ExpectedCHeader::ExactAfterTrim(
             r#"
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 void __swift_bridge__$some_function(struct RustStr arg);
+
+#ifdef __cplusplus
+}
+#endif
     "#,
         )
     }
@@ -147,7 +163,15 @@ func some_function() -> RustString {
 
     const EXPECTED_C_HEADER: ExpectedCHeader = ExpectedCHeader::ExactAfterTrim(
         r#"
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 void* __swift_bridge__$some_function(void);
+
+#ifdef __cplusplus
+}
+#endif
     "#,
     );
 
@@ -199,7 +223,15 @@ func some_function() -> RustStr {
     fn expected_c_header() -> ExpectedCHeader {
         ExpectedCHeader::ExactAfterTrim(
             r#"
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 struct RustStr __swift_bridge__$some_function(void);
+
+#ifdef __cplusplus
+}
+#endif
     "#,
         )
     }
@@ -249,7 +281,16 @@ func __swift_bridge__some_function () -> UnsafeMutableRawPointer {
 "#,
     );
 
-    const EXPECTED_C_HEADER: ExpectedCHeader = ExpectedCHeader::ExactAfterTrim(r#""#);
+    const EXPECTED_C_HEADER: ExpectedCHeader = ExpectedCHeader::ExactAfterTrim(r#"
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
+#ifdef __cplusplus
+}
+#endif
+"#);
 
     #[test]
     fn extern_rust_fn_returns_string() {
@@ -298,7 +339,16 @@ func __swift_bridge__some_function (_ value: UnsafeMutableRawPointer) {
 "#,
     );
 
-    const EXPECTED_C_HEADER: ExpectedCHeader = ExpectedCHeader::ExactAfterTrim(r#""#);
+    const EXPECTED_C_HEADER: ExpectedCHeader = ExpectedCHeader::ExactAfterTrim(r#"
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
+#ifdef __cplusplus
+}
+#endif
+"#);
 
     #[test]
     fn extern_rust_fn_takes_and_returns_string() {

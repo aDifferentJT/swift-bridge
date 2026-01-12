@@ -1,4 +1,9 @@
 #include <stdint.h>
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 typedef struct RustString RustString;
 void __swift_bridge__$RustString$_free(void* self);
 
@@ -17,3 +22,7 @@ uintptr_t __swift_bridge__$RustString$len(void* self);
 struct RustStr __swift_bridge__$RustString$as_str(void* self);
 struct RustStr __swift_bridge__$RustString$trim(void* self);
 bool __swift_bridge__$RustStr$partial_eq(struct RustStr lhs, struct RustStr rhs);
+
+#ifdef __cplusplus
+}
+#endif

@@ -80,6 +80,11 @@ fn core_swift() -> String {
 fn core_c_header() -> String {
     let mut header = r#"#include <stdint.h>
 #include <stdbool.h> 
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 typedef struct RustStr { uint8_t* const start; uintptr_t len; } RustStr;
 typedef struct __private__FfiSlice { void* const start; uintptr_t len; } __private__FfiSlice;
 void* __swift_bridge__null_pointer(void);
@@ -108,6 +113,12 @@ void* __swift_bridge__null_pointer(void);
     ] {
         header += &vec_of_primitive_headers(rust_ty, c_ty);
     }
+
+    header += r#"
+#ifdef __cplusplus
+}
+#endif
+"#;
 
     header
 }

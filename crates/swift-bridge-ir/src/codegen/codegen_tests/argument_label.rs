@@ -155,7 +155,16 @@ func __swift_bridge__some_function (_ arg1: Int32, _ arg2: UInt32) {
     }
 
     fn expected_c_header() -> ExpectedCHeader {
-        ExpectedCHeader::ExactAfterTrim(r#""#)
+        ExpectedCHeader::ExactAfterTrim(r#"
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
+#ifdef __cplusplus
+}
+#endif
+"#)
     }
 
     #[test]
@@ -209,7 +218,16 @@ func __swift_bridge__some_function (firstArg arg1: Int32, secondArg arg2: UInt32
     }
 
     fn expected_c_header() -> ExpectedCHeader {
-        ExpectedCHeader::ExactAfterTrim(r#""#)
+        ExpectedCHeader::ExactAfterTrim(r#"
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
+#ifdef __cplusplus
+}
+#endif
+"#)
     }
 
     #[test]
@@ -264,7 +282,16 @@ func __swift_bridge__some_function (_ arg1: Int32, customLabel arg2: UInt32, _ a
     }
 
     fn expected_c_header() -> ExpectedCHeader {
-        ExpectedCHeader::ExactAfterTrim(r#""#)
+        ExpectedCHeader::ExactAfterTrim(r#"
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
+#ifdef __cplusplus
+}
+#endif
+"#)
     }
 
     #[test]

@@ -99,6 +99,11 @@ extension __swift_bridge__$SomeEnum {
         ExpectedCHeader::ContainsAfterTrim(
             r#"
 #include <stdbool.h>
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 typedef enum __swift_bridge__$SomeEnumTag { __swift_bridge__$SomeEnum$Variant1, __swift_bridge__$SomeEnum$Variant2, } __swift_bridge__$SomeEnumTag;
 typedef struct __swift_bridge__$SomeEnum { __swift_bridge__$SomeEnumTag tag; } __swift_bridge__$SomeEnum;
 typedef struct __swift_bridge__$Option$SomeEnum { bool is_some; __swift_bridge__$SomeEnum val; } __swift_bridge__$Option$SomeEnum;
@@ -277,6 +282,11 @@ func some_function(_ arg: Optional<SomeEnum>) -> Optional<SomeEnum> {
         ExpectedCHeader::ContainsManyAfterTrim(vec![
             r#"
 #include <stdbool.h>
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 typedef enum __swift_bridge__$SomeEnumTag { __swift_bridge__$SomeEnum$Variant1, __swift_bridge__$SomeEnum$Variant2, } __swift_bridge__$SomeEnumTag;
 typedef struct __swift_bridge__$SomeEnum { __swift_bridge__$SomeEnumTag tag; } __swift_bridge__$SomeEnum;
 typedef struct __swift_bridge__$Option$SomeEnum { bool is_some; __swift_bridge__$SomeEnum val; } __swift_bridge__$Option$SomeEnum;
@@ -443,6 +453,11 @@ extension __swift_bridge__$SomeEnum {
             r#"
 #include <stdint.h>
 #include <stdbool.h>
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 typedef struct __swift_bridge__$SomeEnum$FieldOfVariant1 {int32_t _0;} __swift_bridge__$SomeEnum$FieldOfVariant1;
 union __swift_bridge__$SomeEnumFields { __swift_bridge__$SomeEnum$FieldOfVariant1 Variant1;};
 typedef enum __swift_bridge__$SomeEnumTag { __swift_bridge__$SomeEnum$Variant1, __swift_bridge__$SomeEnum$Variant2, } __swift_bridge__$SomeEnumTag;
@@ -561,6 +576,11 @@ extension __swift_bridge__$SomeEnum {
             r#"
 #include <stdint.h>
 #include <stdbool.h>
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 typedef struct __swift_bridge__$SomeEnum$FieldOfA {int32_t _0; uint32_t _1;} __swift_bridge__$SomeEnum$FieldOfA;
 typedef struct __swift_bridge__$SomeEnum$FieldOfB {void* _0;} __swift_bridge__$SomeEnum$FieldOfB;
 union __swift_bridge__$SomeEnumFields { __swift_bridge__$SomeEnum$FieldOfA A; __swift_bridge__$SomeEnum$FieldOfB B;};
@@ -695,6 +715,11 @@ extension __swift_bridge__$SomeEnum {
             r#"
 #include <stdint.h>
 #include <stdbool.h>
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 typedef struct __swift_bridge__$SomeEnum$FieldOfA {int32_t data1; uint32_t data2;} __swift_bridge__$SomeEnum$FieldOfA;
 typedef struct __swift_bridge__$SomeEnum$FieldOfB {void* description;} __swift_bridge__$SomeEnum$FieldOfB;
 union __swift_bridge__$SomeEnumFields { __swift_bridge__$SomeEnum$FieldOfA A; __swift_bridge__$SomeEnum$FieldOfB B;};

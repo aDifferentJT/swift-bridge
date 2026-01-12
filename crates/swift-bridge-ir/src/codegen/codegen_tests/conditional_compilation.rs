@@ -45,7 +45,15 @@ func some_function()
 
     const EXPECTED_C_HEADER: ExpectedCHeader = ExpectedCHeader::ExactAfterTrim(
         r#"
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 void __swift_bridge__$some_function(void);
+
+#ifdef __cplusplus
+}
+#endif
     "#,
     );
 
