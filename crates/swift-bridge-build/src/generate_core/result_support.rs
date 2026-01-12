@@ -36,5 +36,13 @@ extension RustResult {
 "#;
 
 pub const C_RESULT_SUPPORT: &'static str = r#"
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 struct __private__ResultPtrAndPtr { bool is_ok; void* ok_or_err; };
+
+#ifdef __cplusplus
+}
+#endif
 "#;
