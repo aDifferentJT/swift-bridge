@@ -375,10 +375,10 @@ extension SomeType {
     fn expected_c_header() -> ExpectedCHeader {
         ExpectedCHeader::ContainsManyAfterTrim(vec![
             r#"
-void __swift_bridge__$SomeType$some_method(struct __swift_bridge__$SomeType this);
+void __swift_bridge__$SomeType$some_method(struct __swift_bridge__$SomeType self);
     "#,
             r#"
-void __swift_bridge__$SomeType$some_method_ref(struct __swift_bridge__$SomeType this);
+void __swift_bridge__$SomeType$some_method_ref(struct __swift_bridge__$SomeType self);
     "#,
         ])
     }

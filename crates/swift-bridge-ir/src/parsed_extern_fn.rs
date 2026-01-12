@@ -440,7 +440,7 @@ impl ParsedExternFn {
     fn push_self_param(&self, params: &mut Vec<String>) {
         let param = if self.is_copy_method_on_opaque_type() {
             format!(
-                "struct {}${} this",
+                "struct {}${} self",
                 SWIFT_BRIDGE_PREFIX,
                 &self
                     .associated_type

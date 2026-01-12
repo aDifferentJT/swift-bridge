@@ -50,7 +50,7 @@ extension SomeEnum: CustomDebugStringConvertible {
     fn expected_c_header() -> ExpectedCHeader {
         ExpectedCHeader::ContainsAfterTrim(
             r#" 
-void* __swift_bridge__$SomeEnum$Debug(__swift_bridge__$SomeEnum this);
+void* __swift_bridge__$SomeEnum$Debug(__swift_bridge__$SomeEnum self);
 "#,
         )
     }
