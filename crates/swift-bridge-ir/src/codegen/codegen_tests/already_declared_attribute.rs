@@ -321,7 +321,7 @@ mod already_declared_rust_copy_type_methods {
 
     fn expected_c_header() -> ExpectedCHeader {
         ExpectedCHeader::ContainsAfterTrim(
-            r#"void __swift_bridge__$SomeType$some_method(struct __swift_bridge__$SomeType this);"#,
+            r#"void __swift_bridge__$SomeType$some_method(struct __swift_bridge__$SomeType self);"#,
         )
     }
 
