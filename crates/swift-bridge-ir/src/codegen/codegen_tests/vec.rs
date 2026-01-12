@@ -305,6 +305,11 @@ extension MyRustType: Vectorizable {
             r#"
 #include <stdint.h>
 #include <stdbool.h>
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 typedef struct __swift_bridge__$MyRustType { uint8_t bytes[4]; } __swift_bridge__$MyRustType;
 typedef struct __swift_bridge__$Option$MyRustType { bool is_some; __swift_bridge__$MyRustType val; } __swift_bridge__$Option$MyRustType;
 
@@ -316,6 +321,11 @@ __swift_bridge__$Option$MyRustType __swift_bridge__$Vec_MyRustType$get(void* vec
 __swift_bridge__$Option$MyRustType __swift_bridge__$Vec_MyRustType$get_mut(void* vec_ptr, uintptr_t index);
 uintptr_t __swift_bridge__$Vec_MyRustType$len(void* vec_ptr);
 __swift_bridge__$MyRustType* __swift_bridge__$Vec_MyRustType$as_ptr(void* vec_ptr);
+
+
+#ifdef __cplusplus
+}
+#endif
 "#,
         )
     }

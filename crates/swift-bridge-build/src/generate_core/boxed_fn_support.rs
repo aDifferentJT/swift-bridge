@@ -28,6 +28,14 @@ public class __private__RustFnOnceCallbackNoArgsNoRet {
 "#;
 
 pub const C_CALLBACK_SUPPORT_NO_ARGS_NO_RETURN: &'static str = r#"
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 void __swift_bridge__$call_boxed_fn_once_no_args_no_return(void* boxed_fnonce);
 void __swift_bridge__$free_boxed_fn_once_no_args_no_return(void* boxed_fnonce);
+
+#ifdef __cplusplus
+}
+#endif
 "#;
