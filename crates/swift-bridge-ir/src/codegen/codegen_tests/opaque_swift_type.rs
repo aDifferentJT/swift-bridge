@@ -52,7 +52,16 @@ func __swift_bridge__some_function (_ arg: UnsafeMutableRawPointer) {
 "#,
     );
 
-    const EXPECTED_C_HEADER: ExpectedCHeader = ExpectedCHeader::ExactAfterTrim(r#""#);
+    const EXPECTED_C_HEADER: ExpectedCHeader = ExpectedCHeader::ExactAfterTrim(r#"
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
+#ifdef __cplusplus
+}
+#endif
+"#);
 
     #[test]
     fn extern_swift_freestanding_fn_with_owned_opaque_swift_type_arg() {
@@ -109,7 +118,16 @@ func __swift_bridge__some_function () -> UnsafeMutableRawPointer {
     }
 
     fn expected_c_header() -> ExpectedCHeader {
-        ExpectedCHeader::ExactAfterTrim("")
+        ExpectedCHeader::ExactAfterTrim(r#"
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
+#ifdef __cplusplus
+}
+#endif
+"#)
     }
 
     #[test]
@@ -169,7 +187,16 @@ func __swift_bridge__SomeType_some_method (_ this: UnsafeMutableRawPointer) -> U
     }
 
     fn expected_c_header() -> ExpectedCHeader {
-        ExpectedCHeader::ExactAfterTrim("")
+        ExpectedCHeader::ExactAfterTrim(r#"
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
+#ifdef __cplusplus
+}
+#endif
+"#)
     }
 
     #[test]

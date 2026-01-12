@@ -147,6 +147,10 @@ extension MyRustType: Vectorizable {
     fn expected_c_header() -> ExpectedCHeader {
         ExpectedCHeader::ExactAfterTrim(
             r#"
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 typedef struct MyRustType MyRustType;
 void __swift_bridge__$MyRustType$_free(void* self);
 
@@ -158,6 +162,11 @@ void* __swift_bridge__$Vec_MyRustType$get(void* vec_ptr, uintptr_t index);
 void* __swift_bridge__$Vec_MyRustType$get_mut(void* vec_ptr, uintptr_t index);
 uintptr_t __swift_bridge__$Vec_MyRustType$len(void* vec_ptr);
 void* __swift_bridge__$Vec_MyRustType$as_ptr(void* vec_ptr);
+
+
+#ifdef __cplusplus
+}
+#endif
 "#,
         )
     }
@@ -737,7 +746,16 @@ func __swift_bridge__some_function () -> UnsafeMutableRawPointer {
     }
 
     fn expected_c_header() -> ExpectedCHeader {
-        ExpectedCHeader::ExactAfterTrim("")
+        ExpectedCHeader::ExactAfterTrim(r#"
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
+#ifdef __cplusplus
+}
+#endif
+"#)
     }
 
     #[test]
@@ -796,7 +814,16 @@ func __swift_bridge__some_function (_ arg: UnsafeMutableRawPointer) {
     }
 
     fn expected_c_header() -> ExpectedCHeader {
-        ExpectedCHeader::ExactAfterTrim("")
+        ExpectedCHeader::ExactAfterTrim(r#"
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
+#ifdef __cplusplus
+}
+#endif
+"#)
     }
 
     #[test]

@@ -48,7 +48,15 @@ func some_function<GenericIntoRustString: IntoRustString>(_ arg: RustResult<Gene
 
     const EXPECTED_C_HEADER: ExpectedCHeader = ExpectedCHeader::ExactAfterTrim(
         r#"
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 void __swift_bridge__$some_function(struct __private__ResultPtrAndPtr arg);
+
+#ifdef __cplusplus
+}
+#endif
     "#,
     );
 
@@ -114,7 +122,15 @@ public func some_function() throws -> RustString {
 
     const EXPECTED_C_HEADER: ExpectedCHeader = ExpectedCHeader::ExactAfterTrim(
         r#"
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 struct __private__ResultPtrAndPtr __swift_bridge__$some_function(void);
+
+#ifdef __cplusplus
+}
+#endif
     "#,
     );
 

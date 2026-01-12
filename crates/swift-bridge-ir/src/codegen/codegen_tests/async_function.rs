@@ -162,6 +162,11 @@ class CbWrapper$some_function {
         ExpectedCHeader::ContainsAfterTrim(
             r#"
 #include <stdint.h>
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 void __swift_bridge__$some_function(void* callback_wrapper, void __swift_bridge__$some_function$async(void* callback_wrapper), uint32_t arg);
     "#,
         )
@@ -250,6 +255,11 @@ class CbWrapper$some_function {
         ExpectedCHeader::ContainsAfterTrim(
             r#"
 #include <stdint.h>
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 void __swift_bridge__$some_function(void* callback_wrapper, void __swift_bridge__$some_function$async(void* callback_wrapper, uint8_t ret));
     "#,
         )

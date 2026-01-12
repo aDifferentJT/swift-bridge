@@ -94,7 +94,16 @@ extension SomeSwiftType: __swift_bridge__IsSendable {}
 "#,
     );
 
-    const EXPECTED_C_HEADER: ExpectedCHeader = ExpectedCHeader::ExactAfterTrim(r#""#);
+    const EXPECTED_C_HEADER: ExpectedCHeader = ExpectedCHeader::ExactAfterTrim(r#"
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
+#ifdef __cplusplus
+}
+#endif
+"#);
 
     #[test]
     fn extern_swift_type_derive_sendable() {

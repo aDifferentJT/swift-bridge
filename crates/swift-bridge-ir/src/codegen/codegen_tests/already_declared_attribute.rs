@@ -148,7 +148,15 @@ mod already_declared_struct {
     fn expected_c_header() -> ExpectedCHeader {
         ExpectedCHeader::ExactAfterTrim(
             r#"
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 struct __swift_bridge__$FfiSomeType __swift_bridge__$rust_some_function(struct __swift_bridge__$FfiSomeType arg);
+
+#ifdef __cplusplus
+}
+#endif
 "#,
         )
     }
@@ -214,8 +222,15 @@ mod already_declared_enum {
     fn expected_c_header() -> ExpectedCHeader {
         ExpectedCHeader::ExactAfterTrim(
             r#"
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 struct __swift_bridge__$FfiSomeEnum __swift_bridge__$rust_some_function(struct __swift_bridge__$FfiSomeEnum arg);
-"#,
+
+#ifdef __cplusplus
+}
+#endif"#,
         )
     }
 

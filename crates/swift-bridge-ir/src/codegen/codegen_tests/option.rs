@@ -55,7 +55,15 @@ func some_function(_ arg: Optional<UInt8>) -> Optional<Float> {
 
     const EXPECTED_C_HEADER: ExpectedCHeader = ExpectedCHeader::ExactAfterTrim(
         r#"
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 struct __private__OptionF32 __swift_bridge__$some_function(struct __private__OptionU8 arg);
+
+#ifdef __cplusplus
+}
+#endif
     "#,
     );
 
@@ -126,7 +134,16 @@ func __swift_bridge__some_function (_ arg: __private__OptionU8) -> __private__Op
         )
     }
 
-    const EXPECTED_C_HEADER: ExpectedCHeader = ExpectedCHeader::ExactAfterTrim(r#""#);
+    const EXPECTED_C_HEADER: ExpectedCHeader = ExpectedCHeader::ExactAfterTrim(r#"
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
+#ifdef __cplusplus
+}
+#endif
+"#);
 
     #[test]
     fn extern_swift_fn_option_primitive() {
@@ -188,7 +205,15 @@ public func some_function(_ arg: Optional<RustVec<Int32>>) -> Optional<RustVec<U
 
     const EXPECTED_C_HEADER: ExpectedCHeader = ExpectedCHeader::ExactAfterTrim(
         r#"
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 void* __swift_bridge__$some_function(void* arg);
+
+#ifdef __cplusplus
+}
+#endif
     "#,
     );
 
@@ -258,7 +283,15 @@ func some_function<GenericIntoRustString: IntoRustString>(_ arg: Optional<Generi
 
     const EXPECTED_C_HEADER: ExpectedCHeader = ExpectedCHeader::ExactAfterTrim(
         r#"
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 void* __swift_bridge__$some_function(void* arg);
+
+#ifdef __cplusplus
+}
+#endif
     "#,
     );
 
@@ -331,8 +364,16 @@ func another_function() -> Optional<RustStr> {
 
     const EXPECTED_C_HEADER: ExpectedCHeader = ExpectedCHeader::ExactAfterTrim(
         r#"
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 struct RustStr __swift_bridge__$some_function(void);
 struct RustStr __swift_bridge__$another_function(void);
+
+#ifdef __cplusplus
+}
+#endif
     "#,
     );
 
@@ -397,7 +438,15 @@ func some_function<GenericToRustStr: ToRustStr>(_ arg: Optional<GenericToRustStr
 
     const EXPECTED_C_HEADER: ExpectedCHeader = ExpectedCHeader::ExactAfterTrim(
         r#"
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 void __swift_bridge__$some_function(struct RustStr arg);
+
+#ifdef __cplusplus
+}
+#endif
     "#,
     );
 
@@ -460,7 +509,16 @@ func __swift_bridge__some_function (_ arg: UnsafeMutableRawPointer?) {
         )
     }
 
-    const EXPECTED_C_HEADER: ExpectedCHeader = ExpectedCHeader::ExactAfterTrim(r#""#);
+    const EXPECTED_C_HEADER: ExpectedCHeader = ExpectedCHeader::ExactAfterTrim(r#"
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
+#ifdef __cplusplus
+}
+#endif
+"#);
 
     #[test]
     fn extern_swift_func_option_string_arg() {
@@ -519,7 +577,16 @@ func __swift_bridge__some_function () -> UnsafeMutableRawPointer? {
 "#,
     );
 
-    const EXPECTED_C_HEADER: ExpectedCHeader = ExpectedCHeader::ExactAfterTrim(r#""#);
+    const EXPECTED_C_HEADER: ExpectedCHeader = ExpectedCHeader::ExactAfterTrim(r#"
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
+#ifdef __cplusplus
+}
+#endif
+"#);
 
     #[test]
     fn extern_swift_func_returns_optional_string() {
@@ -580,7 +647,16 @@ func __swift_bridge__some_function (_ arg: RustStr) {
         )
     }
 
-    const EXPECTED_C_HEADER: ExpectedCHeader = ExpectedCHeader::ExactAfterTrim(r#""#);
+    const EXPECTED_C_HEADER: ExpectedCHeader = ExpectedCHeader::ExactAfterTrim(r#"
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
+#ifdef __cplusplus
+}
+#endif
+"#);
 
     #[test]
     fn extern_swift_func_option_str_arg() {

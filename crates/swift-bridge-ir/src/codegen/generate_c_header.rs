@@ -387,6 +387,24 @@ typedef struct {option_ffi_name} {{ bool is_some; {ffi_name} val; }} {option_ffi
             )
         }
 
+        for custom_type_declaration in c_ffi_struct_bookkeeping.custom_type_declarations {
+            header += &custom_type_declaration;
+            header += "\n";
+        }
+
+        header = format!(
+            r#"
+#ifdef __cplusplus
+extern "C" {{
+#endif
+
+{header}
+#ifdef __cplusplus
+}}
+#endif
+"#
+        );
+
         let mut includes = bookkeeping.includes.iter().collect::<Vec<_>>();
         includes.sort();
         for include in includes {
@@ -395,10 +413,6 @@ typedef struct {option_ffi_name} {{ bool is_some; {ffi_name} val; }} {option_ffi
 {}"#,
                 include, header
             );
-        }
-        for custom_type_declaration in c_ffi_struct_bookkeeping.custom_type_declarations {
-            header += &custom_type_declaration;
-            header += "\n";
         }
         header
     }
@@ -585,7 +599,21 @@ mod tests {
         let module = parse_ok(tokens);
 
         let header = module.generate_c_header(&CodegenConfig::no_features_enabled());
-        assert_eq!(header.trim(), NOTICE)
+        assert_eq!(
+            header.trim(),
+            format!(
+                r#"{NOTICE}
+
+#ifdef __cplusplus
+extern "C" {{
+#endif
+
+
+#ifdef __cplusplus
+}}
+#endif"#
+            )
+        )
     }
 
     /// Verify that we do not generate any headers for extern "Swift" blocks since Rust does not
@@ -604,7 +632,21 @@ mod tests {
         let module = parse_ok(tokens);
 
         let header = module.generate_c_header(&CodegenConfig::no_features_enabled());
-        assert_eq!(header.trim(), NOTICE)
+        assert_eq!(
+            header.trim(),
+            format!(
+                r#"{NOTICE}
+
+#ifdef __cplusplus
+extern "C" {{
+#endif
+
+
+#ifdef __cplusplus
+}}
+#endif"#
+            )
+        )
     }
 
     /// Verify that we generate a type definition for a freestanding function that has no args.
@@ -619,8 +661,15 @@ mod tests {
             }
         };
         let expected = r#"
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 void __swift_bridge__$foo(void);
-        "#;
+
+#ifdef __cplusplus
+}
+#endif"#;
 
         let module = parse_ok(tokens);
         assert_eq!(
@@ -644,7 +693,16 @@ void __swift_bridge__$foo(void);
         };
         let expected = r#"
 #include <stdint.h>
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 void __swift_bridge__$foo(uint8_t arg1);
+
+#ifdef __cplusplus
+}
+#endif
         "#;
 
         let module = parse_ok(tokens);
@@ -669,7 +727,16 @@ void __swift_bridge__$foo(uint8_t arg1);
         };
         let expected = r#"
 #include <stdint.h>
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 uint8_t __swift_bridge__$foo(void);
+
+#ifdef __cplusplus
+}
+#endif
         "#;
 
         let module = parse_ok(tokens);
@@ -694,9 +761,17 @@ uint8_t __swift_bridge__$foo(void);
         };
         let expected = format!(
             r#"
+#ifdef __cplusplus
+extern "C" {{
+#endif
+
 typedef struct SomeType SomeType;
 void __swift_bridge__$SomeType$_free(void* self);
 {}
+
+#ifdef __cplusplus
+}}
+#endif
 "#,
             vec_opaque_rust_type_c_support("SomeType")
         );
@@ -760,10 +835,19 @@ void __swift_bridge__$SomeType$f(void* self);
         let expected = format!(
             r#"
 #include <stdint.h>
+
+#ifdef __cplusplus
+extern "C" {{
+#endif
+
 typedef struct SomeType SomeType;
 void __swift_bridge__$SomeType$_free(void* self);
 {}
 void __swift_bridge__$SomeType$foo(void* self, uint8_t val);
+
+#ifdef __cplusplus
+}}
+#endif
         "#,
             vec_opaque_rust_type_c_support("SomeType")
         );
@@ -791,10 +875,18 @@ void __swift_bridge__$SomeType$foo(void* self, uint8_t val);
         };
         let expected = format!(
             r#"
+#ifdef __cplusplus
+extern "C" {{
+#endif
+
 typedef struct SomeType SomeType;
 void __swift_bridge__$SomeType$_free(void* self);
 {}
 void __swift_bridge__$SomeType$foo(void* self, void* val);
+
+#ifdef __cplusplus
+}}
+#endif
         "#,
             vec_opaque_rust_type_c_support("SomeType")
         );
@@ -823,10 +915,19 @@ void __swift_bridge__$SomeType$foo(void* self, void* val);
         let expected = format!(
             r#"
 #include <stdint.h>
+
+#ifdef __cplusplus
+extern "C" {{
+#endif
+
 typedef struct SomeType SomeType;
 void __swift_bridge__$SomeType$_free(void* self);
 {}
 uint8_t __swift_bridge__$SomeType$foo(void* self);
+
+#ifdef __cplusplus
+}}
+#endif
         "#,
             vec_opaque_rust_type_c_support("SomeType")
         );
@@ -856,9 +957,18 @@ uint8_t __swift_bridge__$SomeType$foo(void* self);
         };
         let expected = r#"
 #include <stdint.h>
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 typedef struct FfiSlice_uint8_t { uint8_t* start; uintptr_t len; } FfiSlice_uint8_t;
 struct __private__FfiSlice __swift_bridge__$foo(void);
 struct __private__FfiSlice __swift_bridge__$bar(void);
+
+#ifdef __cplusplus
+}
+#endif
         "#;
 
         let module = parse_ok(tokens);
@@ -892,8 +1002,15 @@ struct __private__FfiSlice __swift_bridge__$bar(void);
             }
         };
         let expected = r#"
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 void* __swift_bridge__$some_function(void);
-        "#;
+
+#ifdef __cplusplus
+}
+#endif"#;
 
         let module = parse_ok(tokens);
         assert_trimmed_generated_equals_trimmed_expected(

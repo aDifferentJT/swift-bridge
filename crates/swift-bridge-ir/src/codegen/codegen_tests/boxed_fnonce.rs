@@ -63,7 +63,16 @@ func __swift_bridge__some_function (_ callback: UnsafeMutableRawPointer) {
     }
 
     fn expected_c_header() -> ExpectedCHeader {
-        ExpectedCHeader::ExactAfterTrim("")
+        ExpectedCHeader::ExactAfterTrim(r#"
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
+#ifdef __cplusplus
+}
+#endif
+"#)
     }
 
     #[test]
@@ -873,7 +882,16 @@ func __swift_bridge__SomeType_some_method (_ this: UnsafeMutableRawPointer, _ ca
     }
 
     fn expected_c_header() -> ExpectedCHeader {
-        ExpectedCHeader::ExactAfterTrim("")
+        ExpectedCHeader::ExactAfterTrim(r#"
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
+#ifdef __cplusplus
+}
+#endif
+"#)
     }
 
     #[test]
